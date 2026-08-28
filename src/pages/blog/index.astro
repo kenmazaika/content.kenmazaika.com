@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const readingTime = (body: string) => Math.max(1, Math.ceil(body.trim().split(/\s+/).length / 220));
+const posts = (await getCollection('blog'))
+	.filter((post) => !post.data.hidden)
+	.sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Writing — ${SITE_TITLE}`} description="Field notes on producing, reviewing, and distributing writing — practical systems for scaling content production and building an audience." />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<Header />
+		<main class="archive-page">
+			<header class="archive-header">
+				<p class="eyebrow">Archive</p>
+				<h1>Writing</h1>
+				<p>Field notes on producing, reviewing, and distributing writing.</p>
+			</header>
+			<ul class="post-list archive-list">
+				{posts.map((post) => (
+					<li class="post-item">
+						<a href={`/blog/${post.id}/`}>
+							<p class="post-meta"><FormattedDate date={post.data.pubDate} /> · {readingTime(post.body)} min read</p>
+							<h2 class="post-title">{post.data.title}</h2>
+							<p class="post-description">{post.data.description}</p>
+						</a>
+					</li>
+				))}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>

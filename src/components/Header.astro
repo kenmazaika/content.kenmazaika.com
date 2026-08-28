@@ -1,0 +1,14 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header class="site-header">
+	<div class="content">
+		<a href="/" class="site-title"><span class="site-mark" aria-hidden="true"><span class="site-mark-glyph">K</span></span><span>{SITE_TITLE}</span></a>
+		<nav class="site-nav">
+			<a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
+			<a href="/blog" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Blog</a>
+			<a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About</a>
+		</nav>
+	</div>
+</header>

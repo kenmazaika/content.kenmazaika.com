@@ -1,0 +1,54 @@
+<script is:inline>
+document.addEventListener('click', (event) => {
+  const button = event.target instanceof Element ? event.target.closest('[data-copy-button]') : null;
+  if (!button) return;
+
+  const wrapper = button.closest('.code-block-wrapper');
+  const code = wrapper ? wrapper.querySelector('pre code') : null;
+  if (!code) return;
+
+  const text = code.innerText ?? code.textContent ?? '';
+  if (!text) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    button.textContent = 'Copied';
+    setTimeout(() => {
+      button.textContent = 'Copy';
+    }, 1500);
+  });
+});
+
+document.querySelectorAll('.prose pre').forEach((pre) => {
+  if (pre.closest('.code-block-wrapper')) return;
+
+  const text = (pre.textContent || '').toLowerCase();
+  const label =
+    text.includes('wispr dictation') ? 'topic prompt' :
+    text.includes('dictation d-nnn') ? 'file template' :
+    text.includes('hermes') ? 'prompt' :
+    text.includes('workflow') ? 'workflow' :
+    'snippet';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'code-block-wrapper';
+
+  const chrome = document.createElement('div');
+  chrome.className = 'code-block-chrome';
+
+  const labelEl = document.createElement('div');
+  labelEl.className = 'code-block-label';
+  labelEl.innerHTML = '<span class="code-block-dot"></span><span>' + label + '</span>';
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.setAttribute('data-copy-button', '');
+  button.textContent = 'Copy';
+
+  chrome.appendChild(labelEl);
+  chrome.appendChild(button);
+
+  pre.parentNode.insertBefore(wrapper, pre);
+  wrapper.appendChild(chrome);
+  wrapper.appendChild(pre);
+});
+</script>

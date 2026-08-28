@@ -1,0 +1,119 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import CodeCopyScript from '../components/CodeCopyScript.astro';
+import { SITE_TITLE } from '../consts';
+
+type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingMinutes?: number };
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	slug,
+	seoTitle,
+	socialTitle,
+	readingMinutes = 1,
+	hideDefaultNewsletter = false,
+	noindex = false,
+	related = [],
+	faq = [],
+} = Astro.props;
+const socialImage = `/og/${slug}.png`;
+const socialImageAlt = `${socialTitle ?? title} — Ken Mazaika`;
+const pageTitle = `${seoTitle ?? title} — ${SITE_TITLE}`;
+const canonicalURL = new URL(`/blog/${slug}/`, Astro.site);
+
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description,
+	image: new URL(socialImage, Astro.site).href,
+	author: {
+		'@type': 'Person',
+		name: 'Ken Mazaika',
+		url: new URL('/about/', Astro.site).href,
+	},
+	publisher: {
+		'@type': 'Person',
+		name: 'Ken Mazaika',
+	},
+	datePublished: pubDate.toISOString(),
+	...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+	mainEntityOfPage: canonicalURL.href,
+};
+
+// FAQPage schema — emitted only when the post defines `faq` in frontmatter.
+const faqSchema = faq && faq.length > 0 ? {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faq.map((item) => ({
+		'@type': 'Question',
+		name: item.question,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: item.answer,
+		},
+	})),
+} : null;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={pageTitle}
+			description={description}
+			image={socialImage}
+			imageAlt={socialImageAlt}
+			type="article"
+			noindex={noindex}
+		/>
+		<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<Header />
+		<main class="article-shell">
+			<article>
+				<header class="article-header">
+					<a href="/blog" class="back-link">Back to writing</a>
+					<h1>{title}</h1>
+					{description && <p class="article-deck">{description}</p>}
+					<div class="article-meta">
+						<span>By Ken Mazaika</span><span aria-hidden="true">·</span>
+						<FormattedDate date={pubDate} /><span aria-hidden="true">·</span>
+						<span>{readingMinutes} min read</span>
+						{updatedDate && <span>Updated <FormattedDate date={updatedDate} /></span>}
+					</div>
+				</header>
+				<div class="prose"><slot /></div>
+				{related.length > 0 && (
+					<nav class="related-posts" aria-label="Related reading">
+						<h2>Related reading</h2>
+						<ul>
+							{related.map((item) => (
+								<li><a href={item.url}>{item.title}</a></li>
+							))}
+						</ul>
+					</nav>
+				)}
+				{!hideDefaultNewsletter && <NewsletterSignup />}
+				<footer class="article-footer">
+					<p><strong>Ken Mazaika</strong> writes about scaling content production and building an audience — with and without an AI agent.</p>
+					<a href="/blog" class="back-link">Back to all posts</a>
+				</footer>
+			</article>
+		</main>
+		<Footer />
+		<CodeCopyScript />
+	</body>
+</html>

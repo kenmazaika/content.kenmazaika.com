@@ -1,0 +1,28 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About — ${SITE_TITLE}`} description="Ken Mazaika — notes on scaling content production and building an audience, with and without an AI agent." />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<Header />
+		<main class="about-content">
+			<p class="eyebrow">About</p>
+			<h1>I write about the systems behind consistent, opinionated content.</h1>
+			<p class="about-lead">I'm a technical creator who uses an AI agent heavily — and the more I produced, the more I realized production was never the hard part. Reviewing, keeping a voice, and shipping consistently is.</p>
+			<hr />
+			<p>This site is where I work through the practical side of scaling content: capture, drafting, review, distribution, and the human decisions in between.</p>
+			<p>It's aimed at people who are already publishing more than they used to and want systems that hold up without turning into a factory of generic posts.</p>
+		</main>
+		<Footer />
+	</body>
+</html>

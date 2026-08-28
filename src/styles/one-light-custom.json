@@ -1,0 +1,78 @@
+{
+  "name": "one-light-custom",
+  "type": "light",
+  "fg": "hsl(230, 8%, 24%)",
+  "bg": "hsl(230, 1%, 98%)",
+  "settings": [
+    {
+      "settings": {
+        "foreground": "hsl(230, 8%, 24%)",
+        "background": "transparent",
+        "selection": "hsl(230, 1%, 90%)",
+        "lineHighlight": "hsla(230, 8%, 24%, 0.05)",
+        "gutterForeground": "hsl(230, 1%, 62%)"
+      }
+    },
+    {
+      "scope": ["comment", "prolog", "cdata"],
+      "settings": {
+        "foreground": "hsl(230, 4%, 64%)",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["doctype", "punctuation", "entity"],
+      "settings": {
+        "foreground": "hsl(230, 8%, 24%)"
+      }
+    },
+    {
+      "scope": ["attr-name", "class-name", "boolean", "constant", "number", "atrule"],
+      "settings": {
+        "foreground": "hsl(35, 99%, 36%)"
+      }
+    },
+    {
+      "scope": ["keyword"],
+      "settings": {
+        "foreground": "hsl(301, 63%, 40%)"
+      }
+    },
+    {
+      "scope": ["property", "tag", "symbol", "deleted", "important"],
+      "settings": {
+        "foreground": "hsl(5, 74%, 59%)"
+      }
+    },
+    {
+      "scope": ["selector", "string", "char", "builtin", "inserted", "regex", "attr-value"],
+      "settings": {
+        "foreground": "hsl(119, 34%, 47%)"
+      }
+    },
+    {
+      "scope": ["variable", "operator", "function"],
+      "settings": {
+        "foreground": "hsl(221, 87%, 60%)"
+      }
+    },
+    {
+      "scope": ["url"],
+      "settings": {
+        "foreground": "hsl(198, 99%, 37%)"
+      }
+    },
+    {
+      "scope": ["bold"],
+      "settings": {
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "scope": ["italic"],
+      "settings": {
+        "fontStyle": "italic"
+      }
+    }
+  ]
+}

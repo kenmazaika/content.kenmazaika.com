@@ -1,0 +1,68 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+
+const readingTime = (body: string) => Math.max(1, Math.ceil(body.trim().split(/\s+/).length / 220));
+const posts = (await getCollection('blog'))
+	.filter((post) => !post.data.hidden)
+	.sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const [featured, ...remaining] = posts;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<p class="hero-kicker">Notes on building an audience</p>
+				<h1 class="hero-tagline">Scaling content production without losing your voice.</h1>
+				<p class="hero-sub">Field notes on producing, reviewing, and distributing writing — practical systems for the person who's already publishing more than they used to.</p>
+			</section>
+
+			{featured && (
+				<section class="featured-wrap" aria-labelledby="featured-label">
+					<div class="featured-rule"><span id="featured-label">Latest essay</span></div>
+					<a class="featured-post" href={`/blog/${featured.id}/`}>
+						<p class="featured-meta"><FormattedDate date={featured.data.pubDate} /> · {readingTime(featured.body)} min read</p>
+						<h2>{featured.data.title}</h2>
+						<p>{featured.data.description}</p>
+						<span class="featured-cta">Read the essay <span aria-hidden="true">→</span></span>
+					</a>
+				</section>
+			)}
+
+			{remaining.length > 0 && (
+				<section class="archive-preview" aria-labelledby="recent-writing">
+					<div class="section-label"><h2 id="recent-writing">Recent writing</h2><a href="/blog">View all</a></div>
+					<ul class="post-list">
+						{remaining.map((post) => (
+							<li class="post-item">
+								<a href={`/blog/${post.id}/`}>
+									<p class="post-meta"><FormattedDate date={post.data.pubDate} /> · {readingTime(post.body)} min read</p>
+									<h3 class="post-title">{post.data.title}</h3>
+									<p class="post-description">{post.data.description}</p>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+			<NewsletterSignup />
+		</main>
+		<Footer />
+	</body>
+</html>
