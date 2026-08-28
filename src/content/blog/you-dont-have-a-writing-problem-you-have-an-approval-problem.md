@@ -22,17 +22,17 @@ And almost nobody has built anything for that layer. They've optimized the end t
 
 Let me reframe it as an operator problem, because that's what it is. Generation runs in parallel. My agent can spin up ten drafts in the time it takes me to finish a coffee. The marginal cost of another draft is basically zero.
 
-But review runs in serial. It's me, in a chair, one queue. Every piece has to pass through a single human bottleneck — the "does this sound like me and is it true" call. That call can't be parallelized. It can't be automated away, and if it is, you've just built a machine for producing sameness.
+But review runs in serial. It's me, in a chair, one queue. Every piece has to pass through a single human bottleneck, the "does this sound like me and is it true" call. That call can't be parallelized. It can't be automated away, and if it is, you've just built a machine for producing sameness.
 
 The vendors who build content-approval tooling have documented exactly where this goes wrong. PublishPoint's writeup of approval workflows is blunt: by day three, reviewers are drowning, and by week two you're sitting on a backlog of unvetted articles that can't ship. You've solved the creation problem and created an approval crisis.
 
-That's the pattern. The promised productivity gains evaporate the moment approval bottlenecks hit — because the approval step was designed for a lower volume than the AI-scale output now feeding into it. The reviewer is a serial single point. Latency compounds into a backlog.
+That's the pattern. The promised productivity gains evaporate the moment approval bottlenecks hit, because the approval step was designed for a lower volume than the AI-scale output now feeding into it. The reviewer is a serial single point. Latency compounds into a backlog.
 
 ## The counterintuitive fix
 
-The instinct when the reviewer is the bottleneck is to give the reviewer more help — another pair of hands, another pass, more of you. That's wrong in a specific way. You're the constraint precisely because you're doing the mechanical work *and* the judgment work in the same pass.
+The instinct when the reviewer is the bottleneck is to give the reviewer more help. Another pair of hands, another pass, more of you. That's wrong in a specific way. You're the constraint precisely because you're doing the mechanical work *and* the judgment work in the same pass.
 
-The fix is to separate them. Put a **verifier-agent pass** upstream of the human — a separate step that does all the mechanical checking — so the human only does the one thing that can't be automated: the voice-critical yes or no.
+The fix is to separate them. Put a **verifier-agent pass** upstream of the human, a separate step that does all the mechanical checking, so the human only does the one thing that can't be automated: the voice-critical yes or no.
 
 You don't have a writing problem. You have an approval problem. And the approval problem isn't solved by reviewing more — it's solved by reviewing *less*, by having the right things already verified before they reach you.
 
@@ -46,7 +46,7 @@ This is a workflow design, so here are the rules that make it hold together:
 
 **Rule three: the human is a sign-off gate, not a proofreader.** Your job is the yes/no: would I put my name on this today? Not line-editing. If it needs edits, it goes back to the verifier, not to you.
 
-**Rule four: the voice guide only works if you write it yourself.** This is the one that breaks people. A voice guide you had an AI write for you is not a voice guide — it's a mirror. The whole point is to capture what's yours. You have to write it.
+**Rule four: the voice guide only works if you write it yourself.** This is the one that trips people up. A voice guide you had an AI write for you is not a voice guide, it's a mirror. The whole point is to capture what's yours. You have to write it.
 
 **Rule five: the gate fails if you rubber-stamp it.** A gate you click through without thinking is worse than no gate, because it gives you the false confidence of having reviewed something you didn't.
 
@@ -54,7 +54,7 @@ This is a workflow design, so here are the rules that make it hold together:
 
 Capture → draft → verifier-agent → human sign-off → publish.
 
-That's it. Five steps, one of which is you. Four of which can happen without you, in the background, while you're doing something else.
+Five steps, one of which is you. The other four can run without you in the background, while you're doing something else.
 
 Here's what each step actually is:
 
@@ -64,9 +64,9 @@ Here's what each step actually is:
 
 **Verifier-agent.** This is the step you're probably missing. A separate agent pass that checks: are the facts verified or marked? Does the structure hold? Does it read like the voice guide, or did it drift generic? Is the claim in paragraph three actually supported by the source? This is where the mechanical review happens — upstream, before your attention is spent.
 
-**Human sign-off.** You. One read, one decision. Would I put my name on this today, without edits? If yes, ship. If no, back to the verifier with a note. Under a minute, because the verifier already did the work.
+**Human sign-off.** You. One read, one decision. Would I put my name on this today, without edits? If yes, ship. If no, back to the verifier with a note. It takes under a minute, because the verifier already did the work.
 
-**Publish.** The button. The only part that was always fine.
+**Publish.** The button. This one was never the problem.
 
 ## The two artifacts that carry it
 
@@ -97,22 +97,22 @@ Five questions. Five seconds each. If any of them gives you pause, it goes back.
 
 ## Before and after
 
-**Before:** I'd finish a capture, hand it to the agent, get a draft that was *fine* — grammatically perfect, generically correct, and not really me. Then I'd spend twenty minutes line-editing it to sound like me, which I hated, because it was the most expensive labor in the whole process. Or worse, I'd publish it as-is and it'd read like every other AI-generated post in the feed. The queue grew. The voice drifted. The "this sounds like me" bar got lower because I was out of attention.
+**Before:** I'd finish a capture, hand it to the agent, get a draft that was *fine*. Grammatically perfect, generically correct, and not really me. Then I'd spend twenty minutes line-editing it to sound like me, which I hated, because it was the most expensive labor in the whole process. Or worse, I'd publish it as-is and it'd read like every other AI-generated post in the feed. The queue grew. The voice drifted. The "this sounds like me" bar got lower because I was out of attention.
 
-**After:** The draft comes in, the verifier runs, and by the time I look at it the mechanical work is done — facts checked, continuity held, voice checked against the guide I wrote. My read is one pass and a yes. The gate is the thing that keeps the bar high, not the thing that keeps me up at night. My attention goes to the judgment calls that are actually mine to make.
+**After:** The draft comes in, the verifier runs, and by the time I look at it the mechanical work is done. Facts checked, continuity held, voice checked against the guide I wrote. My read is one pass and a yes. The gate is the thing that keeps the bar high, not the thing that keeps me up at night. My attention goes to the judgment calls that are actually mine to make.
 
 ## The gotchas
 
 - **The voice guide only works if you write it yourself.** I said it, I'll say it again, because it's the most violated rule. Paste an AI-written voice guide into your agent and you've automated the thing you were trying to protect.
-- **The gate fails if you rubber-stamp it.** If you're clicking through without thinking, you're not signing off — you're doing performative review. The gate is a real decision, or it's nothing.
-- **The verifier must not be the same pass as the drafter.** Same agent is fine. Same context, same pass, same job — is not. Separate them or the gate is theater.
+- **The gate fails if you rubber-stamp it.** If you're clicking through without thinking, you're not signing off, you're doing performative review. The gate is a real decision, or it's nothing.
+- **The verifier must not be the same pass as the drafter.** Same agent is fine. Same context, same pass, same job, is not. Separate them or the gate is theater.
 - **Vendor anecdotes are illustrative, not universal.** The "drowning by day three" framing is from a vendor describing a pattern they've seen. It's a useful mechanism, not a universal measurement.
 - **Don't over-fit the numbers.** Some of the stats in this space are weaker than they look. The "1% of LinkedIn users post weekly" figure, for example, circulates widely but is weakly sourced. Use it as a signal, not a citation.
 
 ## The honest part
 
-I want to be clear about what I'm not claiming. I am not claiming this gate grows your audience. No source proves that — the pipeline is a design decision, not an empirical finding. The audience numbers, if they come, are a [UNVERIFIED] bet. What I am claiming is narrower and more defensible: the gate stops the thing that actually stalls you — a queue of things that don't sound like you — and it makes the "does this sound like me" call the only job you have left in the pipeline. That's the whole point. Not more output. The same output, but yours.
+I want to be clear about what I'm not claiming. I am not claiming this gate grows your audience. No source proves that; the pipeline is a design decision, not an empirical finding. The audience numbers, if they come, are a [UNVERIFIED] bet. What I am claiming is narrower and more defensible: the gate stops the thing that actually stalls you, a queue of things that don't sound like you, and it makes the "does this sound like me" call the only job you have left in the pipeline. That's the whole point. Not more output. The same output, but yours.
 
-And one more thing. This field guide you're reading? It's the pattern, run on itself. Capture, draft, verifier, sign-off. The reason it reads like it does — specific, a little argumentative, no corporate sludge — is because a voice guide was written and a gate was run. That's not a boast. It's the demonstration that the gate does what it's supposed to, which is exactly the narrow claim I made.
+And one more thing. This field guide you're reading? It's the pattern, run on itself. Capture, draft, verifier, sign-off. The reason it reads like it does, specific and a little argumentative and free of corporate sludge, is because a voice guide was written and a gate was run. That's not a boast. It's the demonstration that the gate does what it's supposed to, which is exactly the narrow claim I made.
 
-You don't have a writing problem. You have an approval problem. And it's the one problem in the whole content stack you actually have to solve yourself — because it's the only one that's yours.
+You don't have a writing problem. You have an approval problem. And it's the one problem in the whole content stack you actually have to solve yourself, because it's the only one that's yours.
