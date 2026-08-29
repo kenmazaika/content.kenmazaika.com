@@ -22,8 +22,8 @@ for (const f of sitemapFiles) {
 }
 assert.equal(found, true, 'sitemap should contain the post slug');
 
-// The site base URL is the content subdomain.
+// The site base URL is the Publish domain.
 const astroConfig = readFileSync(join(root, 'astro.config.mjs'), 'utf8');
-assert.match(astroConfig, /content\.kenmazaika\.com/);
+assert.match(astroConfig, /publish\.kenmazaika\.com/);
 
-console.log('Content blog: RSS feed + sitemap + site URL verified.');
+console.log('Publish blog: RSS feed + sitemap + site URL verified.');

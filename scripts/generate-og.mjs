@@ -10,12 +10,12 @@ const outputDir = path.join(root, 'public/og');
 const fontDir = path.join(root, 'node_modules/@fontsource');
 
 const colors = {
-  background: '#FAF8F5',
-  text: '#1A1814',
-  muted: '#6B6760',
-  border: '#E8E3DB',
-  faint: '#D8D1C7',
-  accent: '#C2410C',
+  background: '#F7F8FA',
+  text: '#172238',
+  muted: '#4D586B',
+  border: '#D9DEE6',
+  faint: '#AAB2BF',
+  accent: '#D84A38',
 };
 
 function parseFrontmatter(source) {
@@ -80,7 +80,7 @@ function cardTree({ title, category, active }) {
     element('div', { style: {
       position: 'absolute', right: '76px', top: '101px', color: colors.accent,
       fontFamily: 'Newsreader', fontSize: '34px', fontWeight: 700,
-    } }, 'K'),
+    } }, 'Publish.'),
     element('div', { style: {
       position: 'absolute', left: '62px', top: '158px', width: '760px', height: '300px',
       fontFamily: 'Newsreader', fontSize: `${size}px`, lineHeight: 1.08, fontWeight: 600,
@@ -96,7 +96,7 @@ function cardTree({ title, category, active }) {
     element('div', { style: {
       position: 'absolute', right: '76px', top: '556px', fontSize: '19px', fontWeight: 400,
       color: colors.muted,
-    } }, 'engineering.kenmazaika.com'),
+    } }, 'publish.kenmazaika.com'),
   );
 }
 
@@ -106,7 +106,7 @@ function hashActive(value) {
 
 async function renderCard(data, filename, fonts) {
   const title = data.socialTitle || data.title;
-  const category = data.ogCategory || 'FIELD NOTE · ENGINEERING LEADERSHIP';
+  const category = data.ogCategory || 'PUBLISH · FIELD NOTES';
   const tree = cardTree({ title, category, active: hashActive(filename) });
   const svg = await satori(tree, {
     width: 1200,
@@ -133,8 +133,8 @@ async function main() {
 
   const entries = (await readdir(contentDir)).filter((name) => /\.(md|mdx)$/.test(name));
   await renderCard({
-    title: 'Engineering Leadership in the Agent Era',
-    ogCategory: 'KEN MAZAIKA · FIELD NOTES & SYSTEMS',
+    title: 'How ideas get made, sharpened, and found.',
+    ogCategory: 'PUBLISH · KEN MAZAIKA',
   }, 'default.png', fonts);
 
   for (const entry of entries) {

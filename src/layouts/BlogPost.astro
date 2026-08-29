@@ -9,101 +9,44 @@ import CodeCopyScript from '../components/CodeCopyScript.astro';
 import { SITE_TITLE } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingMinutes?: number };
-const {
-	title, description, pubDate, updatedDate, slug, seoTitle, socialTitle,
-	readingMinutes = 1, hideDefaultNewsletter = false, noindex = false,
-	related = [], faq = [], ogCategory,
-} = Astro.props;
+const { title, description, pubDate, updatedDate, slug, seoTitle, socialTitle, readingMinutes = 1, hideDefaultNewsletter = false, noindex = false, related = [], faq = [], ogCategory } = Astro.props;
 const socialImage = `/og/${slug}.png`;
-const socialImageAlt = `${socialTitle ?? title} — Content`;
+const socialImageAlt = `${socialTitle ?? title} — Publish`;
 const pageTitle = `${seoTitle ?? title} — ${SITE_TITLE}`;
 const canonicalURL = new URL(`/blog/${slug}/`, Astro.site);
 const category = ogCategory?.split('·').pop()?.trim() ?? 'Field Note';
-
 const articleSchema = {
 	'@context': 'https://schema.org', '@type': 'BlogPosting', headline: title, description,
 	image: new URL(socialImage, Astro.site).href,
 	author: { '@type': 'Person', name: 'Ken Mazaika', url: new URL('/about/', Astro.site).href },
-	publisher: { '@type': 'Organization', name: 'Content', url: Astro.site?.href },
-	datePublished: pubDate.toISOString(),
-	...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
-	mainEntityOfPage: canonicalURL.href,
+	publisher: { '@type': 'Organization', name: 'Publish', url: Astro.site?.href },
+	datePublished: pubDate.toISOString(), ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}), mainEntityOfPage: canonicalURL.href,
 };
-const faqSchema = faq && faq.length > 0 ? {
-	'@context': 'https://schema.org', '@type': 'FAQPage',
-	mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
-} : null;
+const faqSchema = faq?.length ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) } : null;
 ---
-
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={pageTitle} description={description} image={socialImage} imageAlt={socialImageAlt} type="article" noindex={noindex} />
-		<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-		{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
-	</head>
-	<body>
-		<Header />
-		<main class="article-page">
-			<article>
-				<header class="article-header">
-					<p class="article-section"><span>{category}</span><span>Content / Essay</span></p>
-					<h1>{title}</h1>
-					{description && <p class="article-deck">{description}</p>}
-					<div class="article-byline">
-						<div><span class="byline-label">Written by</span><strong>Ken Mazaika</strong></div>
-						<div><span class="byline-label">Published</span><strong><FormattedDate date={pubDate} /></strong></div>
-						<div><span class="byline-label">Reading time</span><strong>{readingMinutes} minutes</strong></div>
-						{updatedDate && <div><span class="byline-label">Updated</span><strong><FormattedDate date={updatedDate} /></strong></div>}
-					</div>
-				</header>
-
-				<div class="article-body-grid">
-					<aside class="article-rail" aria-label="Article navigation">
-						<a href="/blog" class="rail-back">← Archive</a>
-						<nav class="table-of-contents" aria-label="On this page" hidden>
-							<p>On this page</p>
-							<ol></ol>
-						</nav>
-					</aside>
-					<div class="prose"><slot /></div>
-				</div>
-
-				{related.length > 0 && (
-					<nav class="related-posts" aria-label="Related reading">
-						<p class="section-kicker">Continue reading</p>
-						<h2>Related essays</h2>
-						<ol>{related.map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><a href={item.url}>{item.title}</a></li>)}</ol>
-					</nav>
-				)}
-				{!hideDefaultNewsletter && <NewsletterSignup />}
-				<footer class="article-footer">
-					<p><span>About the author</span><strong>Ken Mazaika</strong> writes about content systems, distribution, and the practical use of AI agents in publishing.</p>
-					<a href="/blog">Browse the archive →</a>
-				</footer>
-			</article>
-		</main>
-		<Footer />
-		<CodeCopyScript />
-		<script is:inline>
-			(() => {
-				const headings = [...document.querySelectorAll('.prose h2')];
-				const toc = document.querySelector('.table-of-contents');
-				const list = toc?.querySelector('ol');
-				if (!toc || !list || headings.length < 3) return;
-				headings.forEach((heading, index) => {
-					if (!heading.id) heading.id = `section-${index + 1}`;
-					const item = document.createElement('li');
-					const link = document.createElement('a');
-					link.href = `#${heading.id}`;
-					link.textContent = heading.textContent || `Section ${index + 1}`;
-					item.appendChild(link); list.appendChild(item);
-				});
-				toc.hidden = false;
-			})();
-		</script>
-	</body>
+<head>
+	<BaseHead title={pageTitle} description={description} image={socialImage} imageAlt={socialImageAlt} type="article" noindex={noindex} />
+	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+	{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+	<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
+</head>
+<body>
+	<Header />
+	<main class="article-page"><article>
+		<header class="article-header">
+			<p class="article-section"><span>{category}</span><a href="/blog">← Archive</a></p>
+			<h1>{title}</h1>
+			{description && <p class="article-deck">{description}</p>}
+			<p class="article-byline"><span>Ken Mazaika</span><span><FormattedDate date={pubDate} /></span><span>{readingMinutes} min read</span>{updatedDate && <span>Updated <FormattedDate date={updatedDate} /></span>}</p>
+		</header>
+		<div class="article-body"><div class="prose"><slot /></div></div>
+		{related.length > 0 && <nav class="related-posts" aria-label="Related reading"><p class="section-kicker">Continue reading</p><h2>Related essays</h2><ol>{related.map((item) => <li><a href={item.url}>{item.title}</a></li>)}</ol></nav>}
+		{!hideDefaultNewsletter && <NewsletterSignup />}
+		<footer class="article-footer"><p><span>About the author</span><strong>Ken Mazaika</strong> writes about content systems, distribution, and the practical use of AI agents in publishing.</p><a href="/blog">Browse the archive →</a></footer>
+	</article></main>
+	<Footer /><CodeCopyScript />
+</body>
 </html>

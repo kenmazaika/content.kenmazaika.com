@@ -35,7 +35,7 @@ const lastmodBySlug = buildLastmodMap();
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://content.kenmazaika.com',
+	site: 'https://publish.kenmazaika.com',
 	integrations: [
 		mdx(),
 		sitemap({

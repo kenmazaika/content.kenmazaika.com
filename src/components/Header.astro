@@ -1,14 +1,9 @@
 ---
 const path = Astro.url.pathname;
 ---
-
 <header class="publication-header">
-	<div class="publication-bar">
-		<p>Content systems, distribution &amp; experiments</p>
-		<p class="publication-edition">Independent publication · Los Angeles</p>
-	</div>
 	<div class="masthead-row">
-		<a href="/" class="wordmark" aria-label="Content home">Content<span class="wordmark-stop">.</span></a>
+		<a href="/" class="wordmark" aria-label="Publish home">Publish<span class="wordmark-stop">.</span></a>
 		<nav class="publication-nav" aria-label="Primary navigation">
 			<a href="/" aria-current={path === '/' ? 'page' : undefined}>Latest</a>
 			<a href="/blog" aria-current={path === '/blog' || path === '/blog/' ? 'page' : undefined}>Archive</a>

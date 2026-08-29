@@ -17,4 +17,4 @@ assert.match(post, /The Human Sign-off Gate/);
 assert.match(post, /class="prose"/);
 assert.match(post, /newsletter-signup/);
 
-console.log('Content blog: approval-problem post + layout verified.');
+console.log('Publish blog: approval-problem post + layout verified.');
