@@ -42,3 +42,18 @@ test('article pages expose social metadata and editorial structure', async () =>
   assert.match(baseHead, /og:image:width/);
   assert.match(baseHead, /twitter:image/);
 });
+
+test('code blocks keep Shiki colors readable and cannot widen the mobile page', async () => {
+  const css = await readFile(path.join(root, 'src/styles/global.css'), 'utf8');
+  const latestPost = await readFile(
+    path.join(root, 'dist/blog/you-dont-need-to-write-a-voice-guide-you-need-to-mine-one/index.html'),
+    'utf8',
+  );
+
+  assert.match(latestPost, /class="astro-code one-light-custom"/);
+  assert.match(css, /\.code-block-wrapper \{[^}]*max-width: 100%[^}]*min-width: 0[^}]*overflow: hidden/s);
+  assert.match(css, /\.prose pre, \.code-block-wrapper pre \{[^}]*width: 100%[^}]*max-width: 100%[^}]*overflow-x: auto/s);
+  assert.match(css, /background: var\(--paper-light\) !important; color: var\(--ink\) !important/);
+  assert.match(css, /\.prose \{ grid-column: 1; width: 100%; max-width: 100%; margin: 0; \}/);
+  assert.doesNotMatch(css, /\.prose pre \{[^}]*background: var\(--night\)/s);
+});
