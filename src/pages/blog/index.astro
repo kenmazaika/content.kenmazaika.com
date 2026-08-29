@@ -4,43 +4,43 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const readingTime = (body: string) => Math.max(1, Math.ceil(body.trim().split(/\s+/).length / 220));
 const posts = (await getCollection('blog'))
 	.filter((post) => !post.data.hidden)
-	.sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const category = (value?: string) => value?.split('·').pop()?.trim() ?? 'Field Note';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Writing — ${SITE_TITLE}`} description="Field notes on producing, reviewing, and distributing writing — practical systems for scaling content production and building an audience." />
+		<BaseHead title="Archive — Content" description="The complete archive of Content: field notes on strategy, workflows, distribution, research, and AI-assisted publishing." />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
 	</head>
 	<body>
 		<Header />
 		<main class="archive-page">
 			<header class="archive-header">
-				<p class="eyebrow">Archive</p>
-				<h1>Writing</h1>
-				<p>Field notes on producing, reviewing, and distributing writing.</p>
+				<p class="issue-line">The complete collection</p>
+				<h1>Archive</h1>
+				<p>Field notes on strategy, workflows, distribution, research, and AI-assisted publishing.</p>
 			</header>
-			<ul class="post-list archive-list">
-				{posts.map((post) => (
-					<li class="post-item">
+			<ol class="editorial-index archive-index">
+				{posts.map((post, index) => (
+					<li>
+						<span class="index-number">{String(index + 1).padStart(2, '0')}</span>
 						<a href={`/blog/${post.id}/`}>
-							<p class="post-meta"><FormattedDate date={post.data.pubDate} /> · {readingTime(post.body)} min read</p>
-							<h2 class="post-title">{post.data.title}</h2>
-							<p class="post-description">{post.data.description}</p>
+							<p class="story-label"><span>{category(post.data.ogCategory)}</span><span><FormattedDate date={post.data.pubDate} /></span></p>
+							<h2>{post.data.title}</h2>
+							<p>{post.data.description}</p>
 						</a>
+						<span class="index-read">{readingTime(post.body)} min</span>
 					</li>
 				))}
-			</ul>
+			</ol>
 		</main>
 		<Footer />
 	</body>

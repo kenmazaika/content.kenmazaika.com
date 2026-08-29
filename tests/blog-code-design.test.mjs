@@ -6,20 +6,20 @@ import { join } from 'node:path';
 const root = new URL('..', import.meta.url).pathname;
 execFileSync('npm', ['run', 'build'], { cwd: root, stdio: 'pipe' });
 
-// Homepage carries the content-blog hero and links to the archive.
 const index = readFileSync(join(root, 'dist/index.html'), 'utf8');
-assert.match(index, /Scaling content production without losing your voice\./);
-assert.match(index, /class="hero"/);
-assert.match(index, /href="\/blog"/);
+assert.match(index, /How ideas get made/);
+assert.match(index, /class="publication-header"/);
+assert.match(index, /class="lead-story"/);
+assert.match(index, /class="publication-note"/);
+assert.match(index, /Content<span class="wordmark-stop">\.<\/span>/);
 
-// Archive lists the post (title is HTML-escaped for the apostrophe).
 const archive = readFileSync(join(root, 'dist/blog/index.html'), 'utf8');
-assert.match(archive, /You Don&#39;t Have a Writing Problem/);
+assert.match(archive, /You Don’t Have a Writing Problem/);
 assert.match(archive, /you-dont-have-a-writing-problem-you-have-an-approval-problem/);
-assert.match(archive, /post-list/);
+assert.match(archive, /editorial-index/);
 
-// About page reflects the content-blog positioning.
 const about = readFileSync(join(root, 'dist/about/index.html'), 'utf8');
-assert.match(about, /consistent, opinionated content/);
+assert.match(about, /where I study how ideas travel/);
+assert.match(about, /class="about-grid"/);
 
-console.log('Content blog: homepage, archive, and about pages verified.');
+console.log('Content publication: homepage, archive, article system, and about page verified.');

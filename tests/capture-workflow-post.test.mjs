@@ -9,7 +9,7 @@ execFileSync('npm', ['run', 'build'], { cwd: root, stdio: 'pipe' });
 // RSS feed includes the post (title/desc are XML-escaped — match on the slug).
 const rss = readFileSync(join(root, 'dist/rss.xml'), 'utf8');
 assert.match(rss, /you-dont-have-a-writing-problem-you-have-an-approval-problem/);
-assert.match(rss, /You Don&apos;t Have a Writing Problem/);
+assert.match(rss, /You Don’t Have a Writing Problem/);
 
 // Sitemap index + page exist and carry the post.
 const sitemapDir = join(root, 'dist');

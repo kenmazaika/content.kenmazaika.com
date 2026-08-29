@@ -1,12 +1,12 @@
 ---
-title: "You Don't Have a Writing Problem. You Have an Approval Problem."
-description: "You've solved production. The bottleneck moved to review — and it's the one step you can't automate away. Build a verifier gate upstream of a human sign-off, and the 'does this sound like me' call becomes your only job."
-socialTitle: "You Don't Have a Writing Problem. You Have an Approval Problem."
+title: "You Don’t Have a Writing Problem. You Have an Approval Problem."
+description: "You’ve solved production. The bottleneck moved to review — and it’s the one step you can’t automate away. Build a verifier gate upstream of a human sign-off, and the ‘does this sound like me’ call becomes your only job."
+socialTitle: "You Don’t Have a Writing Problem. You Have an Approval Problem."
 ogCategory: "Field Note · Content Systems"
 pubDate: "Aug 28, 2026"
 ---
 
-You've solved production. Everyone has. The bottleneck moved — and it's the one step nobody wants to talk about, because it's the one you can't automate away.
+You’ve solved production. Everyone has. The bottleneck moved — and it’s the one step nobody wants to talk about, because it’s the one you can’t automate away.
 
 ## The problem is not what you think it is
 

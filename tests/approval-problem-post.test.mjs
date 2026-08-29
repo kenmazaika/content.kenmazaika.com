@@ -10,7 +10,7 @@ const index = readFileSync(join(root, 'dist/index.html'), 'utf8');
 assert.match(index, /\/blog\/you-dont-have-a-writing-problem-you-have-an-approval-problem\//);
 
 const post = readFileSync(join(root, 'dist/blog/you-dont-have-a-writing-problem-you-have-an-approval-problem/index.html'), 'utf8');
-assert.match(post, /You Don't Have a Writing Problem\. You Have an Approval Problem\./);
+assert.match(post, /You Don’t Have a Writing Problem\. You Have an Approval Problem\./);
 assert.match(post, /The bottleneck moved to review/);
 assert.match(post, /The Voice Guide/);
 assert.match(post, /The Human Sign-off Gate/);

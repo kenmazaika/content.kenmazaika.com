@@ -1,14 +1,19 @@
 ---
-import { SITE_TITLE } from '../consts';
+const path = Astro.url.pathname;
 ---
 
-<header class="site-header">
-	<div class="content">
-		<a href="/" class="site-title"><span class="site-mark" aria-hidden="true"><span class="site-mark-glyph">K</span></span><span>{SITE_TITLE}</span></a>
-		<nav class="site-nav">
-			<a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
-			<a href="/blog" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Blog</a>
-			<a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About</a>
+<header class="publication-header">
+	<div class="publication-bar">
+		<p>Content systems, distribution &amp; experiments</p>
+		<p class="publication-edition">Independent publication · Los Angeles</p>
+	</div>
+	<div class="masthead-row">
+		<a href="/" class="wordmark" aria-label="Content home">Content<span class="wordmark-stop">.</span></a>
+		<nav class="publication-nav" aria-label="Primary navigation">
+			<a href="/" aria-current={path === '/' ? 'page' : undefined}>Latest</a>
+			<a href="/blog" aria-current={path === '/blog' || path === '/blog/' ? 'page' : undefined}>Archive</a>
+			<a href="/about" aria-current={path === '/about' ? 'page' : undefined}>About</a>
+			<a href="/rss.xml">RSS</a>
 		</nav>
 	</div>
 </header>

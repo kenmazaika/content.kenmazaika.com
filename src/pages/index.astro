@@ -4,61 +4,77 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import NewsletterSignup from '../components/NewsletterSignup.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
 const readingTime = (body: string) => Math.max(1, Math.ceil(body.trim().split(/\s+/).length / 220));
 const posts = (await getCollection('blog'))
 	.filter((post) => !post.data.hidden)
-	.sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const [featured, ...remaining] = posts;
+const category = (value?: string) => value?.split('·').pop()?.trim() ?? 'Field Note';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title="Content — Ideas that travel" description={SITE_DESCRIPTION} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
 	</head>
 	<body>
 		<Header />
-		<main>
-			<section class="hero">
-				<p class="hero-kicker">Notes on building an audience</p>
-				<h1 class="hero-tagline">Scaling content production without losing your voice.</h1>
-				<p class="hero-sub">Field notes on producing, reviewing, and distributing writing — practical systems for the person who's already publishing more than they used to.</p>
+		<main class="front-page">
+			<section class="publication-intro" aria-labelledby="publication-deck">
+				<p class="issue-line">Vol. 01 · Notes from the work</p>
+				<h1 id="publication-deck">How ideas get made,<br /><em>sharpened</em>, and found.</h1>
+				<p>Experiments in content, distribution, and AI-assisted marketing. Written from inside the process, not from the sidelines.</p>
 			</section>
 
 			{featured && (
-				<section class="featured-wrap" aria-labelledby="featured-label">
-					<div class="featured-rule"><span id="featured-label">Latest essay</span></div>
-					<a class="featured-post" href={`/blog/${featured.id}/`}>
-						<p class="featured-meta"><FormattedDate date={featured.data.pubDate} /> · {readingTime(featured.body)} min read</p>
-						<h2>{featured.data.title}</h2>
-						<p>{featured.data.description}</p>
-						<span class="featured-cta">Read the essay <span aria-hidden="true">→</span></span>
-					</a>
+				<section class="lead-story" aria-labelledby="lead-story-label">
+					<div class="lead-story-index" aria-hidden="true">01</div>
+					<div class="lead-story-body">
+						<p class="story-label" id="lead-story-label"><span>{category(featured.data.ogCategory)}</span><span>Latest essay</span></p>
+						<a href={`/blog/${featured.id}/`}>
+							<h2>{featured.data.title}</h2>
+							<p class="lead-dek">{featured.data.description}</p>
+						</a>
+						<div class="story-byline">
+							<span>By Ken Mazaika</span>
+							<span><FormattedDate date={featured.data.pubDate} /></span>
+							<span>{readingTime(featured.body)} min read</span>
+							<a href={`/blog/${featured.id}/`}>Read essay <span aria-hidden="true">→</span></a>
+						</div>
+					</div>
 				</section>
 			)}
 
+			<section class="publication-note" aria-label="Editorial note">
+				<p class="section-kicker">The premise</p>
+				<blockquote>Better content rarely starts with writing faster. It starts with choosing a sharper problem, building a better process, and learning how each channel wants the idea delivered.</blockquote>
+			</section>
+
 			{remaining.length > 0 && (
-				<section class="archive-preview" aria-labelledby="recent-writing">
-					<div class="section-label"><h2 id="recent-writing">Recent writing</h2><a href="/blog">View all</a></div>
-					<ul class="post-list">
-						{remaining.map((post) => (
-							<li class="post-item">
+				<section class="recent-stories" aria-labelledby="recent-writing">
+					<header class="section-heading">
+						<div><p class="section-kicker">From the archive</p><h2 id="recent-writing">Recent writing</h2></div>
+						<a href="/blog">View complete archive →</a>
+					</header>
+					<ol class="editorial-index">
+						{remaining.map((post, index) => (
+							<li>
+								<span class="index-number">{String(index + 2).padStart(2, '0')}</span>
 								<a href={`/blog/${post.id}/`}>
-									<p class="post-meta"><FormattedDate date={post.data.pubDate} /> · {readingTime(post.body)} min read</p>
-									<h3 class="post-title">{post.data.title}</h3>
-									<p class="post-description">{post.data.description}</p>
+									<p class="story-label"><span>{category(post.data.ogCategory)}</span><span><FormattedDate date={post.data.pubDate} /></span></p>
+									<h3>{post.data.title}</h3>
+									<p>{post.data.description}</p>
 								</a>
+								<span class="index-read">{readingTime(post.body)} min</span>
 							</li>
 						))}
-					</ul>
+					</ol>
 				</section>
 			)}
 			<NewsletterSignup />

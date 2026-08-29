@@ -2,26 +2,33 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`About — ${SITE_TITLE}`} description="Ken Mazaika — notes on scaling content production and building an audience, with and without an AI agent." />
+		<BaseHead title="About — Content" description="About Content, an independent publication by Ken Mazaika about content systems, distribution, and AI-assisted marketing." />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
 	</head>
 	<body>
 		<Header />
-		<main class="about-content">
-			<p class="eyebrow">About</p>
-			<h1>I write about the systems behind consistent, opinionated content.</h1>
-			<p class="about-lead">I'm a technical creator who uses an AI agent heavily — and the more I produced, the more I realized production was never the hard part. Reviewing, keeping a voice, and shipping consistently is.</p>
-			<hr />
-			<p>This site is where I work through the practical side of scaling content: capture, drafting, review, distribution, and the human decisions in between.</p>
-			<p>It's aimed at people who are already publishing more than they used to and want systems that hold up without turning into a factory of generic posts.</p>
+		<main class="about-page">
+			<header>
+				<p class="issue-line">About this publication</p>
+				<h1>Content is where I study how ideas travel.</h1>
+			</header>
+			<div class="about-grid">
+				<div class="about-statement">
+					<p>I write from inside the work: building a publishing system, testing distribution, using AI agents, and trying to keep the result from sounding like it came off an assembly line.</p>
+				</div>
+				<div class="about-body">
+					<p>The easy part of content production is increasingly the draft. The harder parts are deciding what deserves to exist, developing a point of view, checking the work, and giving an idea a native life in each place it appears.</p>
+					<p>This publication documents those harder parts. Some pieces are workflows you can copy. Others are experiments, research notes, or honest postmortems on what did and did not reach an audience.</p>
+					<p><strong>Ken Mazaika</strong> is an engineering leader and technical creator in Los Angeles. He uses Hermes as part of the publication’s research and production system, with a human at the editorial gate.</p>
+				</div>
+			</div>
 		</main>
 		<Footer />
 	</body>
