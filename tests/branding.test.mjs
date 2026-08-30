@@ -49,7 +49,7 @@ test('article pages expose social metadata and reading-first structure', async (
 
 test('quiet journal CSS centers readable prose without drop caps or heading rules', async () => {
   const css = await readFile(path.join(root, 'src/styles/global.css'), 'utf8');
-  assert.match(css, /--paper:\s*#f7f8fa/i);
+  assert.match(css, /--paper:\s*#faf9f6/i);
   assert.match(css, /--reading:\s*700px/);
   assert.match(css, /\.article-body\s*\{[^}]*max-width:\s*var\(--reading\)[^}]*margin:[^;]*auto/s);
   assert.doesNotMatch(css, /first-letter/);

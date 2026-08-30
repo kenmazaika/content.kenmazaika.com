@@ -10,12 +10,12 @@ const outputDir = path.join(root, 'public/og');
 const fontDir = path.join(root, 'node_modules/@fontsource');
 
 const colors = {
-  background: '#F7F8FA',
-  text: '#172238',
-  muted: '#4D586B',
-  border: '#D9DEE6',
-  faint: '#AAB2BF',
-  accent: '#D84A38',
+  background: '#FAF9F6',
+  text: '#192235',
+  muted: '#505765',
+  border: '#DCD8D0',
+  faint: '#AAA69D',
+  accent: '#C94B36',
 };
 
 function parseFrontmatter(source) {
