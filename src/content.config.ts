@@ -39,7 +39,7 @@ const blog = defineCollection({
 			// Transform string to Date object
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
-			heroImage: z.optional(image()),
+			heroImage: z.optional(z.string()),
 			hideDefaultNewsletter: z.boolean().optional(),
 			// Hidden posts exist at their direct URL but are excluded from the
 			// index, RSS feed, and sitemap (used for staged launches).
