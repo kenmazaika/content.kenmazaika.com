@@ -1,9 +1,10 @@
 ---
 title: "X Articles Are a Preview Post Business"
-description: "The $3 X tier can't publish Articles, and the article body isn't what gets distributed — the preview post is. The agent-integrated playbook: tier gate, rewrite rules, cover spec, posting routes, and the 48-hour verdict."
+description: "The X Articles playbook, from the $8 tier gate to the 48-hour verdict: why the preview post is the product, how the rewrite differs from the original, the 5.2:1 cover spec, and what each posting route costs."
 socialTitle: "X Articles Are a Preview Post Business"
 ogCategory: "Field Note · Content Systems"
 pubDate: "Aug 31, 2026"
+heroImage: "/mastheads/x-articles-are-a-preview-post-business.webp"
 ---
 
 I upgraded to X Premium to publish Articles and found out the $3 tier doesn't include them. That's the first thing nobody tells you about X Articles. The second is bigger: the article body isn't the distribution unit — the preview post is. If the cover, headline, and excerpt don't hook, nothing else matters. I ran the research, tested the posting routes, and this is the playbook I'm building the factory from: flagship post in, paste-ready Article out, agent doing the rewrite and you doing the launch.
