@@ -4,6 +4,8 @@ description: "AI-text detection splits by reader class: laypeople judge at coin-
 socialTitle: "The People Who Can Detect AI Writing Are the People Who Write With AI"
 ogCategory: "Field Note · Content Systems"
 pubDate: "Sep 8, 2026"
+heroImage: "/mastheads/the-people-who-can-detect-ai-writing-are-the-people-who-write-with-ai.webp"
+heroImageMobile: "/mastheads/the-people-who-can-detect-ai-writing-are-the-people-who-write-with-ai-mobile.webp"
 ---
 
 **TL;DR**

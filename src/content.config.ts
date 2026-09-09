@@ -40,6 +40,9 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(z.string()),
+			// Optional mobile-only hero crop/variant (served via <picture> at <=700px;
+			// posts without it render heroImage at every breakpoint, unchanged).
+			heroImageMobile: z.optional(z.string()),
 			hideDefaultNewsletter: z.boolean().optional(),
 			// Hidden posts exist at their direct URL but are excluded from the
 			// index, RSS feed, and sitemap (used for staged launches).

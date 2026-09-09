@@ -9,7 +9,7 @@ import CodeCopyScript from '../components/CodeCopyScript.astro';
 import { SITE_TITLE } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingMinutes?: number };
-const { title, description, pubDate, updatedDate, slug, seoTitle, socialTitle, readingMinutes = 1, hideDefaultNewsletter = false, noindex = false, related = [], faq = [], ogCategory, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, slug, seoTitle, socialTitle, readingMinutes = 1, hideDefaultNewsletter = false, noindex = false, related = [], faq = [], ogCategory, heroImage, heroImageMobile } = Astro.props;
 const socialImage = `/og/${slug}.png`;
 const socialImageAlt = `${socialTitle ?? title} — Publish`;
 const pageTitle = `${seoTitle ?? title} — ${SITE_TITLE}`;
@@ -37,7 +37,14 @@ const faqSchema = faq?.length ? { '@context': 'https://schema.org', '@type': 'FA
 	<Header />
 	<main class="article-page"><article>
 		<header class:list={["article-header", { "article-header--hero": heroImage }]}>
-			{heroImage && <img class="article-header-art" src={heroImage} alt="" />}
+			{heroImage && (heroImageMobile ? (
+				<picture class="article-header-art-picture">
+					<source media="(max-width: 700px)" srcset={heroImageMobile} />
+					<img class="article-header-art" src={heroImage} alt="" />
+				</picture>
+			) : (
+				<img class="article-header-art" src={heroImage} alt="" />
+			))}
 			<div class="article-header-copy">
 			<p class="article-section"><span>{category}</span><a href="/blog">← Archive</a></p>
 			<h1>{title}</h1>
